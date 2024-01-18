@@ -1,0 +1,50 @@
+{
+    "name": "webwhales/twill-seo",
+    "description": "Add SEO meta data to your site built with Twill.",
+    "keywords": [
+        "twill",
+        "twill seo"
+    ],
+    "license": "MIT",
+    "extra": {
+        "laravel": {
+            "providers": [
+                "WebWhales\\TwillSeo\\TwillSeoServiceProvider"
+            ]
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "WebWhales\\TwillSeo\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "WebWhales\\TwillSeo\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^8.1",
+        "area17/twill": "^3.0",
+        "artesaos/seotools": "^1.2"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require-dev": {
+        "orchestra/testbench": "^8.20",
+        "webwhales/code-quality-tools": "dev-packages",
+        "laravel/dusk": "^7.12",
+        "nette/php-generator": "^4.1"
+    },
+    "repositories": {
+        "code-quality-tools": {
+            "type": "github",
+            "url": "https://github.com/WebWhales/Code-Quality-Tools"
+        }
+    },
+    "scripts": {
+        "phpstan": ["phpstan --memory-limit=-1"],
+        "pint": ["pint --config vendor/webwhales/code-quality-tools/pint.json"],
+        "pint-dirty": ["pint --config vendor/webwhales/code-quality-tools/pint.json --dirty"]
+    }
+}

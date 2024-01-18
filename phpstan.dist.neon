@@ -1,0 +1,2 @@
+includes:
+  - vendor/webwhales/code-quality-tools/phpstan.neon

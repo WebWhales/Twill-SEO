@@ -1,0 +1,7 @@
+.php_cs.cache
+.phpunit.cache
+.idea
+build
+composer.lock
+tags
+vendor
