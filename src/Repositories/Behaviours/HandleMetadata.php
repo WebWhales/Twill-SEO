@@ -3,6 +3,7 @@
 namespace WebWhales\TwillSeo\Repositories\Behaviours;
 
 use A17\Twill\Models\Contracts\TwillModelContract;
+use A17\Twill\Models\Model;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 use WebWhales\TwillSeo\Repositories\MetadataRepository;
@@ -66,7 +67,7 @@ trait HandleMetadata
         return $metadataFields;
     }
 
-    protected function setFieldDefaults(TwillModelContract $object, array $fields): array
+    protected function setFieldDefaults(TwillModelContract $object, array|Model $fields): array|Model
     {
         foreach ($this->withDefaultValues as $fieldName) {
             if (empty($fields[$fieldName])) {
