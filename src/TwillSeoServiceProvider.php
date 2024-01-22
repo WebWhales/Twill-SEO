@@ -24,8 +24,8 @@ class TwillSeoServiceProvider extends ServiceProvider
 
     private function extendBlade(): void
     {
-        Blade::include('twill-seo::includes.metadata-fields', 'metadataFields');
-        Blade::include('twill-seo::includes.metadata-settings', 'metadataSettings');
+        Blade::include('twill-seo::metadata-fields', 'metadataFields');
+        Blade::include('twill-seo::metadata-settings', 'metadataSettings');
     }
 
     private function loadResources(): void
