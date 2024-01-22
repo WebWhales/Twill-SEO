@@ -131,13 +131,9 @@ return [
 
 #### 2 – Create new settings file
 
-```blade
-{{-- views/twill/settings/seo/metadata.blade.php --}}
-@twillBlockTitle(twillTrans('twill-seo::form.titles.fieldset'))
-@twillBlockIcon('text')
-@twillBlockGroup('app')
-
-@metadataSettings
+Publish the application views for the package to create the settings file with the following command:
+```shell script
+  php artisan vendor:publish --provider="WebWhales\TwillSeo\TwillSeoServiceProvider" --tag=twill-seo-app-views
 ```
 
 #### 3 – Add to Twill Settings Menu
@@ -247,10 +243,10 @@ If you wish to provide a default OpenGraph Type and Twitter Card Type then you c
 
 You can publish the views for the package with the following command:
 ```shell script
-  php artisan vendor:publish --provider="WebWhales\TwillSeo\TwillSeoServiceProvider" --tag=views
+  php artisan vendor:publish --provider="WebWhales\TwillSeo\TwillSeoServiceProvider" --tag=twill-seo-views
 ```
 
 You can publish the language files for the package with the following command:
 ```shell script
-  php artisan vendor:publish --provider="WebWhales\TwillSeo\TwillSeoServiceProvider" --tag=lang
+  php artisan vendor:publish --provider="WebWhales\TwillSeo\TwillSeoServiceProvider" --tag=twill-seo-lang
 ```
