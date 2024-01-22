@@ -28,7 +28,8 @@ class SeoDataTest extends TestCase
             'title' => ['en' => 'Meta data test title'],
         ]);
 
-        $controllerObject = new class {
+        $controllerObject = new class
+        {
             use SetsMetadata;
         };
 
@@ -50,7 +51,8 @@ class SeoDataTest extends TestCase
         ]);
         $model->metadata()->create();
 
-        $controllerObject = new class {
+        $controllerObject = new class
+        {
             use SetsMetadata;
         };
 
@@ -92,7 +94,8 @@ class SeoDataTest extends TestCase
         ]);
 
         Route::get('test-route', function () use ($model) {
-            $controllerObject = new class {
+            $controllerObject = new class
+            {
                 use SetsMetadata;
             };
 

@@ -38,7 +38,7 @@ trait SetsMetadata
             SEOTools::metatags()->setCanonical($metadata->field('canonical_url'));
         }
 
-        $noindex  = $metadata->field('noindex');
+        $noindex = $metadata->field('noindex');
         $nofollow = $metadata->field('nofollow');
 
         if ($noindex && $nofollow) {

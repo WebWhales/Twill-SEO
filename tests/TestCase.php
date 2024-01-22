@@ -22,7 +22,7 @@ class TestCase extends OrchestraTestCase
 
         Factory::guessFactoryNamesUsing(
             /** @phpstan-ignore-next-line */
-            fn (string $model) => 'WebWhales\\TwillSeo\\Database\\Factories\\' . class_basename($model) . 'Factory'
+            fn (string $model) => 'WebWhales\\TwillSeo\\Database\\Factories\\'.class_basename($model).'Factory'
         );
 
         $this->artisan('vendor:publish --tag=twill-seo-views');
@@ -45,7 +45,7 @@ class TestCase extends OrchestraTestCase
 
         config()->set('translatable.locales', ['en']);
 
-        View::addLocation(__DIR__ . '/Helpers/views');
+        View::addLocation(__DIR__.'/Helpers/views');
 
         // Register Twill Settings
         TwillAppSettings::registerSettingsGroups(

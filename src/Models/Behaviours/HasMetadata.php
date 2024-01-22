@@ -125,7 +125,7 @@ trait HasMetadata
     protected function initializeHasMetadata(): void
     {
         $this->metadataSettings['metadata_fallbacks'] = Arr::wrap(config('metadata.fallbacks'));
-        $this->metadataSettings['medias_params']      = Arr::wrap(config('metadata.mediasParams'));
+        $this->metadataSettings['medias_params'] = Arr::wrap(config('metadata.mediasParams'));
 
         // Add the default metadata from config into the $mediasParams array
         // by default adds in an 'og_image' role with a 'default' crop

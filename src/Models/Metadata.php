@@ -9,11 +9,11 @@ use WebWhales\TwillSeo\Models\Behaviours\HasMetadata;
 use WebWhales\TwillSeo\Models\Translations\MetadataTranslation;
 
 /**
- * @property int               $id
- * @property string|null       $og_type
- * @property string|null       $card_type
- * @property string|null       $noindex
- * @property string|null       $nofollow
+ * @property int $id
+ * @property string|null $og_type
+ * @property string|null $card_type
+ * @property string|null $noindex
+ * @property string|null $nofollow
  * @property Model&HasMetadata $meta_describable
  */
 class Metadata extends Model
@@ -66,9 +66,9 @@ class Metadata extends Model
         }
 
         return match ($column) {
-            'og_type'   => $this->getOgTypeContent($this->$column),
+            'og_type' => $this->getOgTypeContent($this->$column),
             'card_type' => $this->getCardTypeContent($this->$column),
-            default     => $this->$column,
+            default => $this->$column,
         };
     }
 

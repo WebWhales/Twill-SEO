@@ -59,7 +59,7 @@ trait HandleMetadata
         foreach ($fields as $key => $value) {
             if ($this->isMetadataField($key)) {
                 // transform metadata[xxxx] to xxxx
-                $newKey                  = preg_replace('/' . $this->metadataFieldPrefix . '\[([^\]]*)\]/', '$1', $key);
+                $newKey = preg_replace('/'.$this->metadataFieldPrefix.'\[([^\]]*)\]/', '$1', $key);
                 $metadataFields[$newKey] = $value;
             }
         }
@@ -71,7 +71,7 @@ trait HandleMetadata
     {
         foreach ($this->withDefaultValues as $fieldName) {
             if (empty($fields[$fieldName])) {
-                $property           = 'metadataDefault' . Str::studly($fieldName);
+                $property = 'metadataDefault'.Str::studly($fieldName);
                 $fields[$fieldName] = $object->$property;
             }
         }

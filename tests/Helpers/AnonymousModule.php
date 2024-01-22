@@ -227,7 +227,7 @@ class AnonymousModule
         /*
          * The translation model.
          */
-        $this->modelTranslationClass = '\App\Models\Translations\\' . $modelName . 'Translation';
+        $this->modelTranslationClass = '\App\Models\Translations\\'.$modelName.'Translation';
 
         if (! class_exists($this->modelTranslationClass)) {
             /** @phpstan-ignore-next-line */
@@ -237,7 +237,7 @@ class AnonymousModule
         /*
          * The regular model.
          */
-        $this->modelClass = '\App\Models\\' . $modelName;
+        $this->modelClass = '\App\Models\\'.$modelName;
 
         if (! class_exists($this->modelClass)) {
             /** @phpstan-ignore-next-line */
@@ -247,7 +247,7 @@ class AnonymousModule
         /*
          * The revision model.
          */
-        $this->revisionClass = '\App\Models\Revisions\\' . $modelName . 'Revision';
+        $this->revisionClass = '\App\Models\Revisions\\'.$modelName.'Revision';
 
         if (! class_exists($this->revisionClass)) {
             /** @phpstan-ignore-next-line */
@@ -257,7 +257,7 @@ class AnonymousModule
         /*
          * The slug class.
          */
-        $this->slugClass = '\App\Models\Slugs\\' . $modelName . 'Slug';
+        $this->slugClass = '\App\Models\Slugs\\'.$modelName.'Slug';
 
         if (! class_exists($this->slugClass)) {
             /** @phpstan-ignore-next-line */
@@ -267,7 +267,7 @@ class AnonymousModule
         /*
          * The controller class.
          */
-        $this->controllerClass = '\App\Http\Controllers\Twill\\' . $modelName . 'Controller';
+        $this->controllerClass = '\App\Http\Controllers\Twill\\'.$modelName.'Controller';
 
         if (! class_exists($this->controllerClass)) {
             /** @phpstan-ignore-next-line */
@@ -277,7 +277,7 @@ class AnonymousModule
         /*
          * The repository.
          */
-        $this->repositoryClass = '\App\Repositories\\' . $modelName . 'Repository';
+        $this->repositoryClass = '\App\Repositories\\'.$modelName.'Repository';
 
         if (! class_exists($this->repositoryClass)) {
             /** @phpstan-ignore-next-line */
@@ -297,8 +297,8 @@ class AnonymousModule
         $router = app()->make('router');
         $router->getRoutes()->refreshNameLookups();
 
-        config()->set('twill-navigation.' . $this->namePlural, [
-            'title'  => Str::title($this->namePlural),
+        config()->set('twill-navigation.'.$this->namePlural, [
+            'title' => Str::title($this->namePlural),
             'module' => true,
         ]);
 
@@ -332,7 +332,7 @@ class AnonymousModule
 
     protected function buildAnonymousRoutes(string $slug, string $className, array $options = []): void
     {
-        $slugs      = explode('.', $slug);
+        $slugs = explode('.', $slug);
         $prefixSlug = str_replace('.', '/', $slug);
         Arr::last($slugs);
 
@@ -392,17 +392,17 @@ class AnonymousModule
 
         foreach ($customRoutes as $route) {
             $routeSlug = "$adminAppPath/{$prefixSlug}/{$route}";
-            $mapping   = [
-                'as' => $customRoutePrefix . ".{$route}",
+            $mapping = [
+                'as' => $customRoutePrefix.".{$route}",
             ];
 
             if (in_array($route, ['browser', 'tags'])) {
-                Route::get($routeSlug, [$className => $route])->name('twill.' . $mapping['as'])
+                Route::get($routeSlug, [$className => $route])->name('twill.'.$mapping['as'])
                     ->middleware(['web', 'twill_auth:twill_users']);
             }
 
             if ($route === 'restoreRevision') {
-                Route::get($routeSlug . '/{id}', [$className => $route])->name('twill.' . $mapping['as'])
+                Route::get($routeSlug.'/{id}', [$className => $route])->name('twill.'.$mapping['as'])
                     ->middleware(['web', 'twill_auth:twill_users']);
             }
 
@@ -420,12 +420,12 @@ class AnonymousModule
                         return (new $className($app, $request))->{$route}();
                     }
                 )
-                    ->name('twill.' . $mapping['as'])
+                    ->name('twill.'.$mapping['as'])
                     ->middleware(['web', 'twill_auth:twill_users']);
             }
 
             if ($route === 'duplicate' || $route === 'preview') {
-                Route::put($routeSlug . '/{id}', [$className => $route])->name('twill.' . $mapping['as'])
+                Route::put($routeSlug.'/{id}', [$className => $route])->name('twill.'.$mapping['as'])
                     ->middleware(['web', 'twill_auth:twill_users']);
             }
 
@@ -439,7 +439,7 @@ class AnonymousModule
                     'bulkForceDelete',
                 ])
             ) {
-                Route::post($routeSlug, [$className => $route])->name('twill.' . $mapping['as'])
+                Route::post($routeSlug, [$className => $route])->name('twill.'.$mapping['as'])
                     ->middleware(['web', 'twill_auth:twill_users']);
             }
         }
@@ -449,34 +449,34 @@ class AnonymousModule
             function () use ($slug, $className, $adminAppPath) {
                 $arrayToAdd = [
                     'index' => [
-                        'path'   => '/',
+                        'path' => '/',
                         'method' => 'index',
-                        'type'   => 'GET',
+                        'type' => 'GET',
                     ],
                     'edit' => [
-                        'path'   => '/{' . Str::singular($slug) . '}/edit',
+                        'path' => '/{'.Str::singular($slug).'}/edit',
                         'method' => 'edit',
-                        'type'   => 'GET',
+                        'type' => 'GET',
                     ],
                     'create' => [
-                        'path'   => '/create',
+                        'path' => '/create',
                         'method' => 'create',
-                        'type'   => 'POST',
+                        'type' => 'POST',
                     ],
                     'store' => [
-                        'path'   => '/store',
+                        'path' => '/store',
                         'method' => 'store',
-                        'type'   => 'POST',
+                        'type' => 'POST',
                     ],
                     'destroy' => [
-                        'path'   => '/{' . Str::singular($slug) . '}',
+                        'path' => '/{'.Str::singular($slug).'}',
                         'method' => 'destroy',
-                        'type'   => 'DELETE',
+                        'type' => 'DELETE',
                     ],
                     'update' => [
-                        'path'   => '/{' . Str::singular($slug) . '}',
+                        'path' => '/{'.Str::singular($slug).'}',
                         'method' => 'update',
-                        'type'   => 'PUT',
+                        'type' => 'PUT',
                     ],
                 ];
 
@@ -485,7 +485,7 @@ class AnonymousModule
 
                     if ($data['type'] === 'GET') {
                         Route::get(
-                            $adminAppPath . '/' . $slug . $data['path'],
+                            $adminAppPath.'/'.$slug.$data['path'],
                             function (Request $request, Application $app, $model = null) use (
                                 $className,
                                 $method
@@ -494,10 +494,10 @@ class AnonymousModule
                             }
                         )
                             ->middleware(['web', 'twill_auth:twill_users'])
-                            ->name('twill.' . $slug . '.' . $name);
+                            ->name('twill.'.$slug.'.'.$name);
                     } elseif ($data['type'] === 'POST') {
                         Route::post(
-                            $adminAppPath . '/' . $slug . $data['path'],
+                            $adminAppPath.'/'.$slug.$data['path'],
                             function (Request $request, Application $app, $model = null) use (
                                 $className,
                                 $method
@@ -506,10 +506,10 @@ class AnonymousModule
                             }
                         )
                             ->middleware(['web', 'twill_auth:twill_users'])
-                            ->name('twill.' . $slug . '.' . $name);
+                            ->name('twill.'.$slug.'.'.$name);
                     } elseif ($data['type'] === 'PUT') {
                         Route::put(
-                            $adminAppPath . '/' . $slug . $data['path'],
+                            $adminAppPath.'/'.$slug.$data['path'],
                             function (Request $request, Application $app, $model = null) use (
                                 $className,
                                 $method
@@ -518,10 +518,10 @@ class AnonymousModule
                             }
                         )
                             ->middleware(['web', 'twill_auth:twill_users'])
-                            ->name('twill.' . $slug . '.' . $name);
+                            ->name('twill.'.$slug.'.'.$name);
                     } elseif ($data['type'] === 'DELETE') {
                         Route::delete(
-                            $adminAppPath . '/' . $slug . $data['path'],
+                            $adminAppPath.'/'.$slug.$data['path'],
                             function (Request $request, Application $app, $model = null) use (
                                 $className,
                                 $method
@@ -530,7 +530,7 @@ class AnonymousModule
                             }
                         )
                             ->middleware(['web', 'twill_auth:twill_users'])
-                            ->name('twill.' . $slug . '.' . $name);
+                            ->name('twill.'.$slug.'.'.$name);
                     }
                 }
             }
@@ -557,7 +557,7 @@ class AnonymousModule
             $fillable
         );
 
-        $class->addProperty('table', Str::singular($this->namePlural) . '_translations');
+        $class->addProperty('table', Str::singular($this->namePlural).'_translations');
 
         $class->addMethod('isTranslationModel')
             ->setBody('return true;')
@@ -577,7 +577,7 @@ class AnonymousModule
 
         $class = $namespace->addClass($className);
 
-        $class->addProperty('table', Str::singular($this->namePlural) . '_slugs');
+        $class->addProperty('table', Str::singular($this->namePlural).'_slugs');
 
         $class->setExtends(Model::class);
 
@@ -593,7 +593,7 @@ class AnonymousModule
 
         $class = $namespace->addClass($className);
 
-        $class->addProperty('table', Str::singular($this->namePlural) . '_revisions');
+        $class->addProperty('table', Str::singular($this->namePlural).'_revisions');
 
         $class->setExtends(Revision::class);
 
@@ -622,13 +622,13 @@ class AnonymousModule
         $fillable = array_keys($this->fields);
 
         foreach (array_keys($this->belongsTo) as $base) {
-            $fillable[] = $base . '_id';
+            $fillable[] = $base.'_id';
         }
 
         $class->addProperty('fillable', $fillable);
         $class->addProperty('casts', $casts);
         $class->addProperty('table', $this->namePlural);
-        $class->addProperty('translationForeignKey', Str::singular($this->namePlural) . '_id');
+        $class->addProperty('translationForeignKey', Str::singular($this->namePlural).'_id');
         $class->addProperty('translationModel', $this->modelTranslationClass);
 
         $class->addProperty(
@@ -656,12 +656,12 @@ PHP
         }
 
         foreach ($this->repeaters as $repeaterClassName) {
-            $className  = Str::afterLast($repeaterClassName, '\\');
+            $className = Str::afterLast($repeaterClassName, '\\');
             $namePlural = Str::lower(Str::plural($className));
 
             $class->addMethod($namePlural)
                 ->setReturnType(HasMany::class)
-                ->setBody('return $this->hasMany(' . $repeaterClassName . '::class);');
+                ->setBody('return $this->hasMany('.$repeaterClassName.'::class);');
         }
 
         $class->setExtends(Model::class);
@@ -693,7 +693,7 @@ PHP
         $namespace = Str::beforeLast($classNameWithNamespace, '\\');
         $className = Str::afterLast($classNameWithNamespace, '\\');
 
-        $modelClass = '\App\Models\\' . str_replace('Repository', '', $className);
+        $modelClass = '\App\Models\\'.str_replace('Repository', '', $className);
 
         $namespace = new PhpNamespace(ltrim($namespace, '\\'));
 
@@ -731,13 +731,13 @@ PHP
             ->setType('array');
 
         foreach (array_keys($this->belongsToMany) as $target) {
-            $method->addBody('$this->updateBrowser($model, $fields, "' . $target . '");');
+            $method->addBody('$this->updateBrowser($model, $fields, "'.$target.'");');
         }
 
         foreach ($this->repeaters as $repeaterClassName) {
             $base = '$this->updateRepeater($model, $fields, \'##PLURAL##\', \'##CLASSNAME##\', \'##PLURAL##\');';
 
-            $className  = Str::afterLast($repeaterClassName, '\\');
+            $className = Str::afterLast($repeaterClassName, '\\');
             $namePlural = Str::lower(Str::plural($className));
 
             $method->addBody(str_replace(['##PLURAL##', '##CLASSNAME##'], [$namePlural, $className], $base));
@@ -764,9 +764,9 @@ PHP
 
         $class->addProperty('moduleName', Str::plural(Str::lower(str_replace('Controller', '', $className))));
         $class->addProperty('setterProps', [
-            'setSetupMethods'                => serialize($this->setupMethods),
-            'setFormFields'                  => serialize($this->formFields),
-            'setTableColumns'                => serialize($this->tableColumns),
+            'setSetupMethods' => serialize($this->setupMethods),
+            'setFormFields' => serialize($this->formFields),
+            'setTableColumns' => serialize($this->tableColumns),
             'setAdditionalIndexTableColumns' => serialize($this->additionalTableColumns),
         ]);
 
@@ -834,7 +834,8 @@ PHP
     private function migrate(): void
     {
         // Create the migration class.
-        $migration = new class($this->namePlural, $this->fields, $this->belongsToMany, $this->belongsTo) extends Migration {
+        $migration = new class($this->namePlural, $this->fields, $this->belongsToMany, $this->belongsTo) extends Migration
+        {
             public string $nameSingular;
 
             public function __construct(
@@ -856,7 +857,7 @@ PHP
                 foreach ($this->belongsToMany as $target => $model) {
                     $targetSingular = Str::singular($target);
                     Schema::create(
-                        $this->nameSingular . '_' . $targetSingular,
+                        $this->nameSingular.'_'.$targetSingular,
                         function (Blueprint $table) use ($targetSingular) {
                             $table->bigIncrements('id');
                             $table->timestamps();
@@ -893,7 +894,7 @@ PHP
                     }
                 });
 
-                Schema::create($this->nameSingular . '_translations', function (Blueprint $table) {
+                Schema::create($this->nameSingular.'_translations', function (Blueprint $table) {
                     createDefaultTranslationsTableFields($table, $this->nameSingular);
 
                     foreach (collect($this->fields)->where('translatable', true) as $fieldName => $data) {
@@ -901,20 +902,20 @@ PHP
                     }
                 });
 
-                Schema::create($this->nameSingular . '_slugs', function (Blueprint $table) {
+                Schema::create($this->nameSingular.'_slugs', function (Blueprint $table) {
                     createDefaultSlugsTableFields($table, $this->nameSingular);
                 });
 
-                Schema::create($this->nameSingular . '_revisions', function (Blueprint $table) {
+                Schema::create($this->nameSingular.'_revisions', function (Blueprint $table) {
                     createDefaultRevisionsTableFields($table, $this->nameSingular);
                 });
             }
 
             public function down(): void
             {
-                Schema::dropIfExists($this->nameSingular . '_revisions');
-                Schema::dropIfExists($this->nameSingular . '_translations');
-                Schema::dropIfExists($this->nameSingular . '_slugs');
+                Schema::dropIfExists($this->nameSingular.'_revisions');
+                Schema::dropIfExists($this->nameSingular.'_translations');
+                Schema::dropIfExists($this->nameSingular.'_slugs');
                 Schema::dropIfExists($this->namePlural);
             }
         };
