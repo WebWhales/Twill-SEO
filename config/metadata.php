@@ -3,10 +3,10 @@
 return [
 
     'fallbacks' => [
-        'title' => 'title',
+        'title'       => 'title',
         'description' => false,
-        'og_type' => 'metadataDefaultOgType',
-        'card_type' => 'metadataDefaultCardType',
+        'og_type'     => 'metadataDefaultOgType',
+        'card_type'   => 'metadataDefaultCardType',
     ],
 
     'opengraph_type_options' => [
@@ -27,10 +27,10 @@ return [
         'og_image' => [
             'default' => [
                 [
-                    'name' => 'default',
-                    'ratio' => 1.91 / 1,
+                    'name'      => 'default',
+                    'ratio'     => 1.91 / 1,
                     'minValues' => [
-                        'width' => 1200,
+                        'width'  => 1200,
                         'height' => 627,
                     ],
                 ],

@@ -6,6 +6,14 @@
     'translated' => true,
 ])
 
+@formField('input', [
+    'name' => 'site_title_separator',
+    'label' => twillTrans('twill-seo::settings.fields.site_title_separator.label'),
+    'note' => twillTrans('twill-seo::settings.fields.site_title_separator.note'),
+    'textLimit' => '3',
+    'default' => '|',
+])
+
 @formField('medias', [
     'name' => 'default_social_image',
     'label' => twillTrans('twill-seo::settings.fields.og_image.label'),

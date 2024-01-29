@@ -9,16 +9,26 @@ use WebWhales\TwillSeo\Models\Behaviours\HasMetadata;
 use WebWhales\TwillSeo\Models\Translations\MetadataTranslation;
 
 /**
- * @property int $id
- * @property string|null $og_type
- * @property string|null $card_type
- * @property string|null $noindex
- * @property string|null $nofollow
+ * @property int               $id
+ * @property string|null       $og_type
+ * @property string|null       $card_type
+ * @property bool              $noindex
+ * @property bool              $nofollow
+ * @property bool              $use_site_title
  * @property Model&HasMetadata $meta_describable
  */
 class Metadata extends Model
 {
     use HasTranslation;
+
+    /**
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'noindex'        => 'boolean',
+        'nofollow'       => 'boolean',
+        'use_site_title' => 'boolean',
+    ];
 
     /**
      * @var class-string
@@ -44,6 +54,7 @@ class Metadata extends Model
         'card_type',
         'noindex',
         'nofollow',
+        'use_site_title',
     ];
 
     public function meta_describable(): MorphTo
@@ -66,9 +77,9 @@ class Metadata extends Model
         }
 
         return match ($column) {
-            'og_type' => $this->getOgTypeContent($this->$column),
+            'og_type'   => $this->getOgTypeContent($this->$column),
             'card_type' => $this->getCardTypeContent($this->$column),
-            default => $this->$column,
+            default     => $this->$column,
         };
     }
 

@@ -12,21 +12,22 @@ trait SetsMetadata
     {
         /** @phpstan-ignore-next-line */
         /** @var Model&HasMetadata $describable */
+        /** @var \WebWhales\TwillSeo\Models\Metadata $metadata */
         $metadata = $describable->metadata()->firstOrCreate();
 
-        SEOTools::setTitle($metadata->field('title'));
+        SEOTools::setTitle((string) $metadata->field('title'), (bool) $metadata->field('use_site_title'));
 
         if ($metadata->field('description')) {
             SEOTools::setDescription($metadata->field('description'));
         }
 
-        SEOTools::opengraph()->setTitle($metadata->field('og_title'));
+        SEOTools::opengraph()->setTitle((string) $metadata->field('og_title'));
 
         if ($metadata->field('og_description')) {
             SEOTools::opengraph()->setDescription($metadata->field('og_description'));
         }
 
-        SEOTools::opengraph()->addProperty('type', $metadata->field('og_type'));
+        SEOTools::opengraph()->addProperty('type', (string) $metadata->field('og_type'));
 
         if ($metadata->field('og_image')) {
             SEOTools::opengraph()->addImage($metadata->field('og_image'));
@@ -38,7 +39,7 @@ trait SetsMetadata
             SEOTools::metatags()->setCanonical($metadata->field('canonical_url'));
         }
 
-        $noindex = $metadata->field('noindex');
+        $noindex  = $metadata->field('noindex');
         $nofollow = $metadata->field('nofollow');
 
         if ($noindex && $nofollow) {

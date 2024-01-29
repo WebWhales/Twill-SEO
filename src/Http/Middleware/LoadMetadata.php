@@ -16,7 +16,9 @@ class LoadMetadata
 
     private function loadMetadataConfig(): void
     {
-        config()->set('seotools.meta.defaults.separator', ' | ');
+        $separator = TwillAppSettings::getTranslated('seo.metadata.site_title_separator');
+
+        config()->set('seotools.meta.defaults.separator', $separator ? " $separator " : ' | ');
         config()->set('seotools.meta.defaults.title', TwillAppSettings::getTranslated('seo.metadata.site_title'));
     }
 }

@@ -45,6 +45,7 @@
     "scripts": {
         "phpstan": ["phpstan --memory-limit=-1"],
         "pint": ["pint --config vendor/webwhales/code-quality-tools/pint.json"],
-        "pint-dirty": ["pint --config vendor/webwhales/code-quality-tools/pint.json --dirty"]
+        "pint-dirty": ["pint --config vendor/webwhales/code-quality-tools/pint.json --dirty"],
+        "test": ["phpunit"]
     }
 }

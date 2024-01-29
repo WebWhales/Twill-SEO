@@ -22,6 +22,12 @@
             </summary>
 
             @formField('checkbox', [
+                'name' => 'metadata[use_site_title]',
+                'label' => twillTrans('twill-seo::form.fields.use_site_title.label'),
+                'default' => true,
+            ])
+
+            @formField('checkbox', [
             'name' => 'metadata[noindex]',
             'label' => twillTrans('twill-seo::form.fields.noindex.label'),
             ])

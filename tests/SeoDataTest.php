@@ -28,8 +28,7 @@ class SeoDataTest extends TestCase
             'title' => ['en' => 'Meta data test title'],
         ]);
 
-        $controllerObject = new class
-        {
+        $controllerObject = new class {
             use SetsMetadata;
         };
 
@@ -51,8 +50,7 @@ class SeoDataTest extends TestCase
         ]);
         $model->metadata()->create();
 
-        $controllerObject = new class
-        {
+        $controllerObject = new class {
             use SetsMetadata;
         };
 
@@ -94,8 +92,7 @@ class SeoDataTest extends TestCase
         ]);
 
         Route::get('test-route', function () use ($model) {
-            $controllerObject = new class
-            {
+            $controllerObject = new class {
                 use SetsMetadata;
             };
 
@@ -106,5 +103,39 @@ class SeoDataTest extends TestCase
 
         $this->get('test-route')
             ->assertSee('<title>Meta data test title | Default site title</title>', false);
+    }
+
+    public function test_model_seo_meta_data_is_rendered_without_site_title(): void
+    {
+        $this->updateTwillAppSettings('seo', 'metadata', [
+            'site_title' => ['en' => 'Default site title'],
+        ]);
+
+        $module = AnonymousModule::make('posts', $this->app)
+            ->withModelTraits([HasMetadata::class])
+            ->boot();
+
+        /** @phpstan-ignore-next-line */
+        /** @var Model&HasMetadata $model */
+        $model = $module->getRepository()->create([
+            'title' => 'Test title',
+        ]);
+        $this->app?->make(MetadataRepository::class)->updateOrCreateForModel($model, [
+            'title'          => ['en' => 'Meta data test title'],
+            'use_site_title' => false,
+        ]);
+
+        Route::get('test-route', function () use ($model) {
+            $controllerObject = new class {
+                use SetsMetadata;
+            };
+
+            $controllerObject->setMetadataFromTwillModel($model);
+
+            return view('page_with_seo_metadata');
+        })->middleware(LoadMetadata::class);
+
+        $this->get('test-route')
+            ->assertSee('<title>Meta data test title</title>', false);
     }
 }
